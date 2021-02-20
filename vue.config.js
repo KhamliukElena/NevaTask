@@ -1,3 +1,3 @@
 module.exports = {
-    publicPath: '/NevaTask/'
+    publicPath: process.env.VUE_APP_MODE === 'production' ? '/NevaTask/' : '/',
 }
