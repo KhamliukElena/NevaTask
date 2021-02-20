@@ -10,7 +10,7 @@ const routes = [
 ]
 
 const router = createRouter({
-  process.env.NODE_ENV === 'production' ? '/NevaTask/' : '/',
+  base: process.env.NODE_ENV === 'production' ? '/NevaTask/' : '/',
   history: createWebHashHistory(),
   routes
 })
