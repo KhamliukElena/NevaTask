@@ -90,7 +90,7 @@ export default {
                 new Date(2021, 7, 21, 19, 0),
                 new Date(2021, 7, 21, 19, 15),
                 new Date(2021, 7, 21, 21, 0),
-            ],
+            ], //schedule from A to B moscow time
             BAdefault: [
                 new Date(2021, 7, 21, 18, 30),
                 new Date(2021, 7, 21, 18, 45),
@@ -99,23 +99,24 @@ export default {
                 new Date(2021, 7, 21, 19, 35),
                 new Date(2021, 7, 21, 21, 50),
                 new Date(2021, 7, 21, 21, 55),
-            ],
+            ], //schedule from B to A moscow time
             tripDuration: 50,
             priceOneWay: 700,
             priceTwoWays: 1200,
             quantity: 0,
-            sum: 0,
-            msg: "",
+            sum: 0, //order cost
+            msg: "", //error msg
             backTripInfo: {
                 startTime: "",
                 finishTime: ""
-            },
+            }, //if two-ways trip, stores info about second
             startTime: "",
             finishTime: ""
         };
     },
     computed: {
         getTimeZoneDiff: function () { 
+            //find time difference between local time and moscow
             return  -(new Date()).getTimezoneOffset() - 180;
         }
     },
@@ -124,6 +125,7 @@ export default {
             document.getElementsByClassName("res")[0].style.display = "none";
         },
         addMinutes: function (currentTime, interval) {
+            //function for changing time for local and calculating arrival time
             return new Date(currentTime.setMinutes(currentTime.getMinutes() + interval));    
         },
         localTime: function (time) {
@@ -137,6 +139,7 @@ export default {
             }
         },
         getBackTime: function (selected) {
+            //get copy of a date not to corrupt the original object
             switch(selected) {
                 case "18:30(из B в A)": return new Date(this.BAdefault[0]);
                 case "18:45(из B в A)": return new Date(this.BAdefault[1]);
@@ -170,6 +173,7 @@ export default {
             }
         },
         backRoute: function (e) {
+            //processes two-way trip, calculates appropriate back trips
             let selected = e.target.value;
             this.hideRes();
             if (this.route != "из A в B и обратно в А") {
@@ -203,6 +207,7 @@ export default {
             }
         },
         calcSum: function () {
+            //prepares resuls
             let value = "";
             this.hideRes();
             this.quantity = document.getElementById("quantity").value;
@@ -234,6 +239,7 @@ export default {
         }
     },
     created() {
+        //changes default shedule time into local time after initializing the component
         for (let i=0; i<this.ABdefault.length; i++) {
             this.ABdefault[i] = this.addMinutes(this.ABdefault[i], this.getTimeZoneDiff);
         }
