@@ -1,3 +1,3 @@
 module.exports = {
-    publicPath: "/NevaTask/"
+    publicPath: process.env.NODE_ENV === 'production' ? '/NevaTask/' : '/',
 }
